@@ -1,0 +1,19 @@
+---
+- name: Check for teleport
+  stat:
+    path: /usr/local/bin/teleport
+  register: tp_binary
+
+- name: Check teleport version
+  shell: /usr/local/bin/teleport version | awk '{print $2}' | tr -d 'A-z'
+  when: tp_binary.stat.exists
+  register: tp_version_detected
+  changed_when: false
+
+- name: Install teleport package
+  when: ((not tp_binary.stat.exists) or (tp_version_detected.stdout is defined and tp_version_detected.stdout is version(tp_version, '<')))
+  apt:
+    deb: "{{ tp_deb_url }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 86400

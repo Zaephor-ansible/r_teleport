@@ -1,0 +1,29 @@
+teleport:
+  nodename: "{{ tp_nodename }}"
+  advertise_ip: localhost
+{% if tp_auth_token|default(false) %}
+  auth_token: "{{ tp_auth_token }}"
+{% endif %}
+{% if tp_auth_servers|default(false) and tp_auth_servers|length %}
+  auth_servers:
+{% for entry in tp_auth_servers %}
+  - {{ entry }}
+{% endfor %}
+{% endif %}
+  log:
+    output: stdout
+    severity: ERROR
+auth_service:
+  enabled: no
+proxy_service:
+  enabled: no
+sh_service:
+  enabled: yes
+{% if tp_labels|default(false) %}
+  labels:
+  {{ tp_labels|to_nice_yaml(indent=2) }}
+{% endif %}
+{% if tp_commands|default(false) %}
+  commands:
+  {{ tp_commands|to_nice_yaml(indent=2) }}
+{% endif %}

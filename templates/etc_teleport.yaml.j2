@@ -17,13 +17,13 @@ auth_service:
   enabled: no
 proxy_service:
   enabled: no
-sh_service:
+ssh_service:
   enabled: yes
 {% if tp_labels|default(false) %}
   labels:
-  {{ tp_labels|to_nice_yaml(indent=2) }}
+  {{ tp_labels|to_nice_yaml(indent=2) | indent(4) }}
 {% endif %}
 {% if tp_commands|default(false) %}
   commands:
-  {{ tp_commands|to_nice_yaml(indent=2) }}
+  {{ tp_commands|to_nice_yaml(indent=2) | indent(4) }}
 {% endif %}

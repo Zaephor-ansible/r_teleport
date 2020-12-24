@@ -21,9 +21,9 @@ ssh_service:
   enabled: yes
 {% if tp_labels|default(false) %}
   labels:
-  {{ tp_labels|to_nice_yaml(indent=4) | indent(4) }}
+  {{ tp_labels|to_nice_yaml(indent=2) | trim | indent(4) }}
 {% endif %}
 {% if tp_commands|default(false) %}
   commands:
-  {{ tp_commands|to_nice_yaml(indent=4) | indent(4) }}
+  {{ tp_commands|to_nice_yaml(indent=2) | trim | indent(4) }}
 {% endif %}

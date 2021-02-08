@@ -1,5 +1,6 @@
 ---
 - name: Set systemd service
+  become: yes
   when: "ansible_service_mgr == 'systemd'"
   systemd:
     daemon_reload: yes
@@ -9,6 +10,7 @@
     masked: no
 
 - name: Set upstart service(legacy)
+  become: yes
   when: "ansible_service_mgr == 'upstart'"
   service:
     enabled: yes

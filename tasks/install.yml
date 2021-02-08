@@ -5,12 +5,14 @@
   register: tp_binary
 
 - name: Check teleport version
+  become: yes
   shell: /usr/local/bin/teleport version | awk '{print $2}' | tr -d 'A-z'
   when: tp_binary.stat.exists
   register: tp_version_detected
   changed_when: false
 
 - name: Install teleport package
+  become: yes
   when: ((not tp_binary.stat.exists) or (tp_version_detected.stdout is defined and tp_version_detected.stdout is version(tp_version, '<')))
   apt:
     deb: "{{ tp_deb_url }}"

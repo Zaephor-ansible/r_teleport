@@ -2,18 +2,18 @@
 - name: Set systemd service
   become: yes
   when: "ansible_service_mgr == 'systemd'"
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: yes
     enabled: yes
     name: teleport
-    state: "{{ 'restarted' if (tp_configfiles.changed or (tp_version_detected.stdout is version(tp_version, '<'))) else 'started' }}"
+    state: "{{ 'reloaded' if (tp_configfiles.changed or (tp_version_detected.stdout is version(tp_version, '<'))) else 'started' }}"
     masked: no
 
 - name: Set upstart service(legacy)
   become: yes
   when: "ansible_service_mgr == 'upstart'"
-  service:
+  ansible.builtin.service:
     enabled: yes
     name: teleport
-    state: "{{ 'restarted' if (tp_configfiles.changed or (tp_version_detected.stdout is version(tp_version, '<'))) else 'started' }}"
+    state: "{{ 'reloaded' if (tp_configfiles.changed or (tp_version_detected.stdout is version(tp_version, '<'))) else 'started' }}"
 

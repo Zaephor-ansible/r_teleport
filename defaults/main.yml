@@ -1,5 +1,5 @@
 ---
 # defaults file for r_teleport
-tp_version: "8.0.7"
+tp_version: "9.0.3"
 tp_deb_arch: "amd64"
 tp_deb_url: "https://get.gravitational.com/teleport_{{ tp_version }}_{{ tp_deb_arch }}.deb"
